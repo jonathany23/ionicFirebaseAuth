@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { User } from '../../models/user';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { ToastController } from 'ionic-angular/components/toast/toast-controller';
 
 
 /**
@@ -20,7 +21,7 @@ export class LoginPage {
 
   user = {} as User;
 
-  constructor(private afAuth: AngularFireAuth,
+  constructor(private afAuth: AngularFireAuth, private toast: ToastController,
     public navCtrl: NavController, public navParams: NavParams) {
   }
 
@@ -37,6 +38,10 @@ export class LoginPage {
           }
         }).catch(error => {
           console.error("ERROR signInWithEmailAndPassword "+error);
+          this.toast.create({
+            message: 'No se pudo encontrar Authentication detail',
+            duration: 3000
+          }).present();
         });      
     } catch(e){
       console.error("login "+e);
